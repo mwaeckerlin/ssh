@@ -21,3 +21,5 @@ RUN mkdir /var/run/sshd
 
 ADD start.sh /start.sh
 CMD /start.sh
+
+VOLUME /home
