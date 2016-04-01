@@ -8,7 +8,17 @@ Can get Users from LDAP, e.g.:
         -e LDAPURI="ldap://my.example.com" \
         -e LDAPBINDDN="cn=ssh-bind,ou=system,ou=people" \
         -e LDAPBINDPW="H2Djds4ZAhsa" \
-        -e LDAPBASEUSERDN="ou=person,ou=people," \
-        -e LDAPBASEGROUPDN="ou=group," \
+        -e LDAPBASEUSERDN="ou=person,ou=people" \
+        -e LDAPBASEGROUPDN="ou=group" \
         -e LDAPSSL="start_tls" \
+        mwaeckerlin/ssh
+
+or to connect to LDAP via link:
+
+    docker run -d --name ssh -p 222:22 \
+        --link openldap:ldap \
+        -e LDAPBINDDN="cn=ssh-bind,ou=system,ou=people" \
+        -e LDAPBINDPW="H2Djds4ZAhsa" \
+        -e LDAPBASEUSERDN="ou=person,ou=people" \
+        -e LDAPBASEGROUPDN="ou=group" \
         mwaeckerlin/ssh
