@@ -16,6 +16,9 @@ function optional() {
 if test -z "$LDAPURI" -a -n "$LDAP_ENV_DOMAIN"; then
     # get LDAPURI from docker link
     export LDAPURI="ldap://ldap"
+    LDAPBASE="${LDAP_ENV_DOMAIN#*://}"
+    LDAPBASE="${LDAPBASE%:*}"
+    export LDAPBASE="dc=${LDAPBASE//./,dc=}"
 fi
 if test -z "$LDAPBASE" -a -n "$LDAPURI"; then
     # get base from server
