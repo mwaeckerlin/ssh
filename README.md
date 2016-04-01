@@ -10,4 +10,5 @@ Can get Users from LDAP, e.g.:
         -e LDAPBINDPW="H2Djds4ZAhsa" \
         -e LDAPBASEUSERDN="ou=person,ou=people," \
         -e LDAPBASEGROUPDN="ou=group," \
+        -e LDAPSSL="start_tls" \
         mwaeckerlin/ssh
