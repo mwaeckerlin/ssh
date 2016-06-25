@@ -22,3 +22,5 @@ or to connect to LDAP via link:
         -e LDAPBASEUSERDN="ou=person,ou=people" \
         -e LDAPBASEGROUPDN="ou=group" \
         mwaeckerlin/ssh
+
+Instead or in addition of LDAP authentication, you can also provide ssh public keys in variable `SSHKEY` (keys are separated by newline).
