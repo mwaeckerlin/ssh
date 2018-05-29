@@ -1,7 +1,5 @@
-FROM ubuntu:latest
+FROM mwaeckerlin/ubuntu-base
 MAINTAINER mwaeckerlin
-ENV TERM="xterm"
-ENV LANG "en_US.UTF-8"
 
 ENV SSHOPTIONS "-e"
 ENV SSHKEY ""
@@ -48,6 +46,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install language-pack-en libpam-ldap nscd openssh-server emacs24-nox rsync
 RUN sed -i 's,\(\(passwd\|group\|shadow\): *\),\1ldap ,' /etc/nsswitch.conf
 RUN echo "session required    pam_mkhomedir.so skel=/etc/skel umask=0022" >> /etc/pam.d/common-session
+RUN echo "AddressFamily inet" >> /etc/ssh/sshd_config
 RUN mkdir /var/run/sshd
 
 ADD config-ldap.sh /config-ldap.sh
