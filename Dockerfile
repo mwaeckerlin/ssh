@@ -46,6 +46,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install language-pack-en libpam-ldap nscd openssh-server emacs24-nox rsync
 RUN sed -i 's,\(\(passwd\|group\|shadow\): *\),\1ldap ,' /etc/nsswitch.conf
 RUN echo "session required    pam_mkhomedir.so skel=/etc/skel umask=0022" >> /etc/pam.d/common-session
+RUN sed -i 's,HostKey */etc/ssh/,HostKey /keys/,g' /etc/ssh/sshd_config
 RUN echo "AddressFamily inet" >> /etc/ssh/sshd_config
 RUN mkdir /var/run/sshd
 
@@ -55,3 +56,4 @@ ADD start.sh /start.sh
 CMD /start.sh
 
 VOLUME /home
+VOLUME /keys
