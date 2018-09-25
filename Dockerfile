@@ -41,14 +41,15 @@ ENV LDAPNSS_BASE_NETGROUP ""
 
 EXPOSE 22
 
-RUN echo "ldap-auth-config ldap-auth-config/move-to-debconf boolean false" | debconf-set-selections
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install language-pack-en libpam-ldap nscd openssh-server emacs24-nox rsync
-RUN sed -i 's,\(\(passwd\|group\|shadow\): *\),\1ldap ,' /etc/nsswitch.conf
-RUN echo "session required    pam_mkhomedir.so skel=/etc/skel umask=0022" >> /etc/pam.d/common-session
-RUN sed -i 's,HostKey */etc/ssh/,HostKey /keys/,g' /etc/ssh/sshd_config
-RUN echo "AddressFamily inet" >> /etc/ssh/sshd_config
-RUN mkdir /var/run/sshd
+RUN echo "ldap-auth-config ldap-auth-config/move-to-debconf boolean false" | debconf-set-selections \
+ && apt-get update \
+ && apt-get --no-install-recommends --no-install-suggests -y install \
+       language-pack-en libpam-ldap nscd openssh-server emacs-nox rsync \
+ && sed -i 's,\(\(passwd\|group\|shadow\): *\),\1ldap ,' /etc/nsswitch.conf \
+ && echo "session required    pam_mkhomedir.so skel=/etc/skel umask=0022" >> /etc/pam.d/common-session \
+ && sed -i 's,HostKey */etc/ssh/,HostKey /keys/,g' /etc/ssh/sshd_config \
+ && echo "AddressFamily inet" >> /etc/ssh/sshd_config \
+ && mkdir /var/run/sshd
 
 ADD config-ldap.sh /config-ldap.sh
 ADD server.sh /server.sh
