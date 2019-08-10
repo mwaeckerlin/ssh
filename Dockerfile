@@ -47,10 +47,9 @@ RUN echo "ldap-auth-config ldap-auth-config/move-to-debconf boolean false" | deb
  && /cleanup.sh \
  && sed -i 's,\(\(passwd\|group\|shadow\): *\),\1ldap ,' /etc/nsswitch.conf \
  && echo "session required    pam_mkhomedir.so skel=/etc/skel umask=0022" >> /etc/pam.d/common-session \
- && sed -i 's,^ *#* *HostKey */etc/ssh/,HostKey /keys/,g' /etc/ssh/sshd_config \
- && echo "AddressFamily inet" >> /etc/ssh/sshd_config \
  && mkdir /var/run/sshd
 
+ADD sshd_config /etc/ssh/sshd_config
 ADD config-ldap.sh /config-ldap.sh
 ADD server.sh /server.sh
 ADD start.sh /start.sh
